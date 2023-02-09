@@ -1,4 +1,4 @@
-# casion-r-vue
+# casino-r-vue
 
 ## Project setup
 ```

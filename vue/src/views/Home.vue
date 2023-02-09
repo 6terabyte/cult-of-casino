@@ -1,18 +1,25 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App" />
+    <h1>WELCOME TO THE CULT OF CASION-R</h1>
+    <el-row>
+      <el-col v-for="game of gameList" :key="game.name">
+        <router-link tag="div" :to="game.link">{{ game.name }}</router-link>
+      </el-col>
+    </el-row>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
-
+import { defineComponent, reactive } from 'vue';
+import { GameList } from '../constants/constants';
 export default defineComponent({
-  name: 'Home',
-  components: {
-    HelloWorld,
+  async setup() {
+    const gameList = reactive({ ...GameList });
+    return {
+      gameList,
+    };
   },
 });
 </script>
+
+<style lang="scss" module></style>
