@@ -1,30 +1,50 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
+  <div :id="$style.all">
+    <el-page-header title="casion-R" :icon="null">
+      <template #content>
+        <router-link tag="div" to="/">top</router-link>
+        <router-link tag="div" to="/game/roulette">Roulette</router-link>
+        <router-link tag="div" to="/game/blackjack">Blackjack</router-link>
+        <a href="/game/roulette">a-roulette</a>
+      </template>
+    </el-page-header>
+
+    <Suspense>
+      <router-view></router-view>
+    </Suspense>
   </div>
-  <router-view />
 </template>
 
-<style lang="scss">
+<script lang="ts">
+import { defineComponent } from 'vue';
+import { useRouter } from 'vue-router';
+const router = useRouter();
+
+export default defineComponent({
+  setup() {
+    const goTop = () => {
+      alert('gotop');
+      router.push('/home');
+    };
+    return {
+      goTop,
+    };
+  },
+});
+</script>
+
+<style lang="scss" module>
+@use '@/constants/color';
+
+body {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  background-color: color.$BACKGROUND_COLOR;
+}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
 }
 </style>
