@@ -5,24 +5,26 @@
   "description": "descfription",
   "author": "rin <strawberinmilk@gmail.com>",
   "license": "MIT",
-  "repository": {
-  },
+  "repository": {},
   "scripts": {
     "preinstall": "npx only-allow yarn",
     "start": "node ./dist/index.js",
     "quick": "ts-node index.ts",
     "build": "ts-node ./build.ts && tsc --lib es2020",
+    "build-vue": "cd vue && yarn run build",
+    "build-all": "yarn run build && yarn run build-vue",
+    "pkg": "yarn && cd vue && yarn",
     "readme": "npx readme-md-generator",
-    "test": "#",
+    "test": "jest",
     "commit": "git cz",
     "lint": "tsc --noEmit && eslint ./*.ts --config ./.eslintrc.js --no-ignore --cache --color --fix",
+    "lint-all": "yarn run lint && cd vue && yarn run lint",
     "ignore": "curl https://raw.githubusercontent.com/github/gitignore/master/Node.gitignore -o ./.gitignore",
-    "document": "typedoc --plugin typedoc-plugin-markdown --out ./docs/ ./*.ts && license-checker --json > ./licenses.json"
+    "document": "typedoc --plugin typedoc-plugin-markdown --out ./docs/ ./*.ts && license-checker --json > ./licenses.json",
+    "watch": "nodemon ./index.ts"
   },
-  "keywords": [
-  ],
-  "bugs": {
-  },
+  "keywords": [],
+  "bugs": {},
   "engines": {
     "yarn": ">=1.22.4",
     "node": ">=12.16.2"
@@ -39,8 +41,17 @@
     }
   },
   "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "express-http-proxy": "^1.6.3",
+    "http": "^0.0.1-security",
+    "json-cyclic": "^1.0.2",
+    "serve-static": "^1.15.0",
+    "socket.io": "^4.6.0",
+    "ts-node-dev": "^2.0.0"
   },
   "devDependencies": {
+    "@types/jest": "^29.4.0",
     "@types/js-yaml": "3.12.6",
     "@typescript-eslint/eslint-plugin": "4.5.0",
     "@typescript-eslint/parser": "4.5.0",
@@ -52,14 +63,17 @@
     "eslint-plugin-node": "11.1.0",
     "eslint-plugin-prettier": "3.2.0",
     "husky": "4.3.7",
+    "jest": "^29.4.2",
     "license-checker": "25.0.1",
+    "nodemon": "^2.0.20",
     "only-allow": "1.0.0",
     "prettier": "2.2.1",
     "readme-md-generator": "1.0.0",
     "shelljs": "0.8.4",
-    "ts-node": "9.1.0",
+    "ts-jest": "^29.0.5",
+    "ts-node": "^10.9.1",
     "typedoc": "0.20.14",
     "typedoc-plugin-markdown": "3.0.11",
-    "typescript": "4.0.3"
+    "typescript": "^4.9.5"
   }
 }

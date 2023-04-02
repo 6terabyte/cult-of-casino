@@ -1,0 +1,34 @@
+version: "3"
+services:
+  node:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    volumes:
+      - .:/app
+    tty:  true
+    depends_on:
+      - postgres
+    networks:
+      - default
+    ports:
+      - 5000:5000
+      - 5001:5001
+    environment:
+      QUICK: true
+    command:
+      sh -c "yarn run watch"
+
+  postgres:
+    image: postgres:13
+    ports:
+      - 5433:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: cdasino_r_db
+    volumes:
+      - db_data:/var/lib/posrgresql/data
+
+volumes:
+  db_data: {}
