@@ -116,3 +116,5 @@ dist
 .pnp.*
 
 config.yml
+
+compose-node-secret.env
