@@ -7,6 +7,9 @@
         <router-link tag="div" to="/game/blackjack">Blackjack</router-link>
         <a href="/game/roulette">a-roulette</a>
       </template>
+      <template #extra>
+        <router-link tag="div" to="/user/login">ログイン</router-link>
+      </template>
     </el-page-header>
 
     <Suspense>

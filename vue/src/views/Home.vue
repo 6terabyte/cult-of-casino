@@ -11,7 +11,7 @@
 
 <script lang="ts">
 import { defineComponent, reactive } from 'vue';
-import { GameList } from '../constants/constants';
+import { GameList } from '../constants/constant';
 export default defineComponent({
   async setup() {
     const gameList = reactive({ ...GameList });

@@ -104,11 +104,7 @@
           :card="card"
         />
       </el-col>
-      <el-col
-        v-if="state.turnNum === -1"
-        :span="8"
-        :id="$style.myHand"
-      >
+      <el-col v-if="state.turnNum === -1" :span="8" :id="$style.myHand">
         <span v-if="state.memberData[4]" :class="$style.card_area">
           <TrumpFront
             v-for="card of state.memberData[4].handCard"

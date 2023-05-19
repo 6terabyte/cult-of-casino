@@ -11,9 +11,10 @@
     "typeRoots": ["node_modules/@types"],
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "allowJs": true
   },
-  "include": ["*.ts"],
+  "include": ["*.ts", "./src/**/*.ts", "./src/**/**/*.ts"],
   "exclude": ["node_modules"],
   "strict": true,
   "noImplicitAny": false,
