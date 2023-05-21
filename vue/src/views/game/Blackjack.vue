@@ -33,8 +33,29 @@
         join
       </el-col>
     </el-row>
-    <el-button @click="hit">hit</el-button>
-    <el-button @click="stand">stand</el-button>
+    <div :class="$style.control_panel">
+      <el-button @click="betChange(-10)">-10</el-button>
+      <el-button @click="betChange(-1)">-1</el-button>
+      <input :id="$style.betInput" type="number" v-model="state.betEditChip" />
+      <el-button @click="betChange(1)">+1</el-button>
+      <el-button @click="betChange(10)">+10</el-button>
+      <br />
+      <el-row>
+        <el-col :span="8">
+          <div :class="$style.control_panel">yourChip: {{ state.chip }}</div>
+        </el-col>
+        <el-col :span="8">
+          <div :class="$style.control_panel">
+            <el-button @click="bet">bet</el-button>
+            <el-button @click="hit">hit</el-button>
+            <el-button @click="stand">stand</el-button>
+          </div>
+        </el-col>
+        <el-col :span="8">
+          <div :class="$style.control_panel">bet chip: {{ state.betChip }}</div>
+        </el-col>
+      </el-row>
+    </div>
     <el-row>
       <el-col :span="4">
         <span v-if="state.memberData[0]">
@@ -46,7 +67,9 @@
           {{ state.memberData[1].userName }}
         </span>
       </el-col>
-      <el-col :span="8" v-if="state.turnNum !== -1">You</el-col>
+      <el-col :span="8" v-if="state.turnNum !== -1">{{
+        state.userName
+      }}</el-col>
       <el-col :span="8" v-if="state.turnNum === -1">
         <span v-if="state.memberData[4]">
           {{ state.memberData[4].userName }}
@@ -154,6 +177,7 @@ import { Trump } from '@/../../@types/type';
 import { GameResult } from '@/../../src/games/blackjack/bj_modules';
 import TrumpFront from '@/components/TrumpFront.vue';
 import * as notification from '@/components/notification';
+import { getSession } from '@/components/funcs';
 
 export default defineComponent({
   components: {
@@ -179,6 +203,10 @@ export default defineComponent({
       memberData: { userName: string; handCard: Trump[] }[];
       turnNum: number;
       nowTurn: number;
+      chip: number;
+      betChip: number;
+      betEditChip: number;
+      userName: string;
     }>({
       handCard: [],
       dealer: [],
@@ -202,6 +230,10 @@ export default defineComponent({
       memberData: [],
       turnNum: 0,
       nowTurn: 0,
+      chip: 0,
+      betChip: 0,
+      betEditChip: 10,
+      userName: 'You',
     });
 
     const socket = io('/');
@@ -214,7 +246,10 @@ export default defineComponent({
         })
       );
 
-      socket.emit('blackjack', JSON.stringify({ type: 'join' }));
+      socket.emit(
+        'blackjack',
+        JSON.stringify({ type: 'join', session: getSession })
+      );
 
       socket.on('table_change', (message) => {
         const data = JSON.parse(message);
@@ -226,6 +261,25 @@ export default defineComponent({
         state.memberData = data.memberData;
         state.turnNum = data.turnNum;
         state.nowTurn = data.nowTurn;
+        state.chip = data.chip;
+        state.betChip = data.betChip;
+        state.userName = data.userName;
+      });
+
+      socket.on('your_bet_turn', () => {
+        notification.info({
+          title: 'あなたのターンです',
+          message: 'ベットをしてください',
+        });
+        state.hitTurn = true;
+      });
+
+      socket.on('your_bet_success', () => {
+        notification.info({
+          title: 'ベットしました',
+          message: 'ベットしました',
+        });
+        state.hitTurn = true;
       });
 
       socket.on('your_hit_turn', () => {
@@ -258,9 +312,21 @@ export default defineComponent({
       });
     });
 
+    const betChange = (num: number) => {
+      state.betEditChip += num;
+    };
+
+    const bet = () => {
+      socket.emit(
+        'blackjack',
+        JSON.stringify({ type: 'bet', bet: state.betEditChip })
+      );
+    };
+
     const hit = () => {
       socket.emit('blackjack', JSON.stringify({ type: 'hit' }));
     };
+
     const stand = () => {
       socket.emit('blackjack', JSON.stringify({ type: 'stand' }));
       state.hitTurn = false;
@@ -288,6 +354,8 @@ export default defineComponent({
 
     return {
       state,
+      betChange,
+      bet,
       hit,
       stand,
       nextGameJoin,
@@ -302,6 +370,14 @@ export default defineComponent({
   display: flex;
   flex-wrap: nowrap;
   justify-content: center;
+}
+
+.control_panel {
+  text-align: center;
+}
+
+#betInput {
+  width: 50px;
 }
 
 #handArea {

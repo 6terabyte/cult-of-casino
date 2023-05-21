@@ -76,13 +76,19 @@ export default defineComponent({
         email: userData.email,
         pass: userData.password,
       });
-      if(res) {
-        notification.success({title: '成功', message: 'アカウントが作成されました メールを確認してください'})
-        setTimeout(()=>{
-          location.href = '/'
-        }, 3000)
+      if (res) {
+        notification.success({
+          title: '成功',
+          message: 'アカウントが作成されました メールを確認してください',
+        });
+        setTimeout(() => {
+          location.href = '/';
+        }, 3000);
       } else {
-        notification.error({title: 'エラー', message: 'アカウント作成に失敗しました'})
+        notification.error({
+          title: 'エラー',
+          message: 'アカウント作成に失敗しました',
+        });
       }
     };
     return {

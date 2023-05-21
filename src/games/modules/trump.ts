@@ -1,6 +1,6 @@
-import { Trump } from '../../../@types/type'
+import { Trump } from '../../../@types/type';
 
-export const createCard = (jokerNumber = 2) => {
+export const createCard = (jokerNumber = 2): Trump[] => {
   const cards: Trump[] = [];
   for (const symbol of ['spade', 'club', 'heart', 'diamond']) {
     for (let number = 1; number <= 13; number++) {
@@ -43,7 +43,7 @@ export const createCard = (jokerNumber = 2) => {
     }
   }
 
-  for (let i = 0; i < jokerNumber ; i++) {
+  for (let i = 0; i < jokerNumber; i++) {
     cards.push({
       symbol: 'joker',
       joker: true,

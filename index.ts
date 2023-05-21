@@ -12,8 +12,8 @@ import { authMiddleware } from './src/middleware/auth.middleware';
 import { gqlRouter } from './src/router/gql.router';
 import { userRouter } from './src/router/user.router';
 
-import { UserResolver } from './src/db/resolvers/user.resolver';
-const userResolver = new UserResolver();
+// import { UserCustmResolver } from './src/db/resolvers/user.custm.resolver';
+// const userCustmResolver = new UserCustmResolver();
 
 import * as blackJack from './src/games/blackjack/bj_main';
 
@@ -48,7 +48,7 @@ app.use(cors());
 (async () => {
   await dataSource.initialize();
   console.log('connect');
-  // console.log(await userResolver.addUser({
+  // console.log(await userCustmResolver.addUser({
   //   name: 'test4',
   //   screenName: 'test4',
   //   email: 'test4',
@@ -60,12 +60,12 @@ app.use(cors());
   //   // chip: 200,
   //   // chipTemp: null
   // }))
-  //await userResolver.updateUser({
+  //await userCustmResolver.updateUser({
   //  id:1,
   //  chip: 300
   //})
-  //console.log(await userResolver.getUserById(1));
-  //console.log(await userResolver.getUserAll());
+  //console.log(await userCustmResolver.getUserById(1));
+  //console.log(await userCustmResolver.getUserAll());
 
   app.use('/api', authMiddleware);
   app.use('/api/user', userRouter);

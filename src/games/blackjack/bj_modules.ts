@@ -4,17 +4,21 @@ import { Trump } from '../../../@types/type';
 export interface User {
   socket: Socket;
   socketId: string;
+  userId: number;
   userName: string;
   handCard: Trump[];
   turnNum: number;
   nextGameJoin: boolean;
   active: boolean;
+  chip: number;
+  betChip: number;
 }
 
 export interface Game {
   step:
     | 'stanby'
     | 'init'
+    | 'bet'
     | 'hand'
     | 'hit_and_stand'
     | 'dealer_open'
@@ -158,6 +162,7 @@ export const dealerHide = (game: Game): boolean => {
   switch (game.step) {
     case 'stanby':
     case 'init':
+    case 'bet':
     case 'hand':
     case 'hit_and_stand':
       return true;

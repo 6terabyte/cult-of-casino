@@ -17,7 +17,7 @@
     "readme": "npx readme-md-generator",
     "test": "jest",
     "commit": "git cz",
-    "lint": "tsc --noEmit && eslint ./*.ts --config ./.eslintrc.js --no-ignore --cache --color --fix",
+    "lint": "tsc --noEmit && eslint ./*.ts ./src/**/*.ts ./src/**/**/*.ts --config ./.eslintrc.js --no-ignore --cache --color --fix",
     "lint-all": "yarn run lint && cd vue && yarn run lint",
     "watch": "nodemon ./index.ts"
   },

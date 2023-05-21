@@ -1,5 +1,11 @@
 import nodemailer from 'nodemailer';
-import { MAIL_HOST, MAIL_PORT, MAIL_SECURE, MAIL_AUTH_MAIL, MAIL_AUTH_PASS} from '../constants/constants'
+import {
+  MAIL_HOST,
+  MAIL_PORT,
+  MAIL_SECURE,
+  MAIL_AUTH_MAIL,
+  MAIL_AUTH_PASS,
+} from '../constants/constants';
 
 export class Message {
   public from: string;
@@ -26,7 +32,7 @@ const options = {
   },
 };
 
-export const mailSend = async (message: Message) => {
+export const mailSend = async (message: Message): Promise<void> => {
   try {
     const transport = nodemailer.createTransport(options);
     const result = await transport.sendMail(message);
@@ -36,4 +42,4 @@ export const mailSend = async (message: Message) => {
     console.log('--- Error ---');
     console.log(err);
   }
-}
+};
